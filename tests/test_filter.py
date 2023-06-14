@@ -1,16 +1,19 @@
 import numpy as np
 import filter
+import pytest
 
-EUCLIDEAN_TOL = 1
+EUCLIDEAN_TOL = 1e-1
+
 
 def rel_euclidean_distance(vector1, vector2):
     distance = np.linalg.norm(vector1 - vector2)
     norm1 = np.linalg.norm(vector1)
     norm2 = np.linalg.norm(vector2)
-    rel_distance = distance / (norm1+norm2)
+    rel_distance = distance / (norm1 + norm2)
     return rel_distance
 
 
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_sinus():
     duration = 1.0
     sampling_rate = 44100
@@ -26,6 +29,7 @@ def test_sinus():
     assert distance < EUCLIDEAN_TOL
 
 
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_sinus_random_noise():
     duration = 1.0
     sampling_rate = 44100
