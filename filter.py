@@ -25,7 +25,7 @@ def rel_euclidean_distance(vector1, vector2):
     norm1 = np.linalg.norm(vector1)
     norm2 = np.linalg.norm(vector2)
 
-    if norm1 + norm1 == 0:
+    if norm1 + norm2 == 0:
         rel_distance = 0
     else:
         rel_distance = distance / (norm1 + norm2)
@@ -51,7 +51,11 @@ def signal_noise_ratio(signal, noise):
     signal_power = np.mean(signal_int64**2)
     noise_power = np.mean(noise_int64**2)
 
-    if noise_power == 0:
+    if signal_power == 0 and noise_power == 0:
+        snr = 0
+    elif signal_power == 0:
+        snr = -np.inf
+    elif noise_power == 0:
         snr = np.inf
     else:
         snr = 10 * np.log10(signal_power / noise_power)
