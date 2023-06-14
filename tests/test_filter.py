@@ -1,4 +1,4 @@
-import numpy as np  
+import numpy as np
 import filter
 from filter import rel_euclidean_distance, signal_noise_ratio
 import pytest
@@ -72,28 +72,30 @@ def test_sinus_random_noise_snr():
 
     # add silence to beginning of signal
     noise_len = signal.shape[0]
-    signal = np.hstack((np.zeros_like(signal),signal))
+    signal = np.hstack((np.zeros_like(signal), signal))
 
     # add noise to signal
     noise = np.random.normal(0, 1, len(signal))
     noise_signal = signal + noise
 
     # Filter Signal
-    signal_reduced_noise = filter.spectral_gate(noise_signal, sampling_rate, noise=noise)
-    reduced_noise = signal_reduced_noise[0:noise_len] 
-    
+    signal_reduced_noise = filter.spectral_gate(
+        noise_signal, sampling_rate, noise=noise
+    )
+    reduced_noise = signal_reduced_noise[0:noise_len]
 
     snr = signal_noise_ratio(signal_reduced_noise, reduced_noise)
     assert snr > SNR_TOL
 
+
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_audio_snr():
-    rate_signal, signal= wavfile.read("./records/record_30.wav")
-    noise_range = int(signal.shape[0]/6)    # extract part of the signal just noise
+    rate_signal, signal = wavfile.read("./records/record_30.wav")
+    noise_range = int(signal.shape[0] / 6)  # extract part of the signal just noise
 
     # Filter
-    signal_reduced_noise = filter.spectral_gate(signal.T,rate_signal,noise=None)
-    reduced_noise = signal_reduced_noise[:,1000:noise_range]
+    signal_reduced_noise = filter.spectral_gate(signal.T, rate_signal, noise=None)
+    reduced_noise = signal_reduced_noise[:, 1000:noise_range]
 
-    snr = signal_noise_ratio(signal_reduced_noise[0,:], reduced_noise[0,:])
+    snr = signal_noise_ratio(signal_reduced_noise[0, :], reduced_noise[0, :])
     assert snr > SNR_TOL
