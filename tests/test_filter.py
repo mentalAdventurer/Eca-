@@ -10,6 +10,9 @@ SNR_TOL = 20
 
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_sinus_euc():
+    """
+    Test filter for relative euclidean distance with sinusoidal signal and zero noise
+    """
     duration = 30
     sampling_rate = 44100
     frequency = 100
@@ -27,6 +30,9 @@ def test_sinus_euc():
 
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_sinus_random_noise_euc():
+    """
+    Test filter for relative euclidean distance with sinusodal signal and random generated noise.
+    """
     duration = 1.0
     sampling_rate = 44100
     frequency = 100
@@ -45,6 +51,9 @@ def test_sinus_random_noise_euc():
 
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_sinus_snr():
+    """
+    Test filter for signal to noise ratio with sinusoidal signal and zero noise
+    """
     duration = 1.0
     sampling_rate = 44100
     frequency = 100
@@ -62,6 +71,9 @@ def test_sinus_snr():
 
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_sinus_random_noise_snr():
+    """
+    Test filter for signal to noise ratio with sinusoidal signal and random generated noise.
+    """
     duration = 1.0
     sampling_rate = 44100
     frequency = 100
@@ -90,6 +102,10 @@ def test_sinus_random_noise_snr():
 
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_audio_snr():
+    """
+    Test filter for signal to noise ratio with example audio file.
+    Position of the noise in the signal is static and the signal is known.
+    """
     rate_signal, signal = wavfile.read("./records/record_30.wav")
     noise_range = int(signal.shape[0] / 6)  # extract part of the signal just noise
 
