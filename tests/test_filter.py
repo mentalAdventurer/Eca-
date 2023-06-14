@@ -1,16 +1,10 @@
-import numpy as np
+import numpy as np  
 import filter
+from filter import rel_euclidean_distance, signal_noise_ratio
 import pytest
+from scipy.io import wavfile
 
 EUCLIDEAN_TOL = 1e-1
-
-
-def rel_euclidean_distance(vector1, vector2):
-    distance = np.linalg.norm(vector1 - vector2)
-    norm1 = np.linalg.norm(vector1)
-    norm2 = np.linalg.norm(vector2)
-    rel_distance = distance / (norm1 + norm2)
-    return rel_distance
 
 
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
