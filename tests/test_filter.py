@@ -8,6 +8,66 @@ EUCLIDEAN_TOL = 1e-1
 SNR_TOL = 20
 
 
+def test_rel_euclidean_distance_zero():
+    """
+    Test rel_euclidean_distance for zero vector as input value.
+    """
+    zero_vector = np.zeros((2, 10000))
+    one_vector = np.ones((2, 10000))
+    distance1 = rel_euclidean_distance(zero_vector, one_vector)
+    distance2 = rel_euclidean_distance(one_vector, zero_vector)
+    distance3 = rel_euclidean_distance(zero_vector, zero_vector)
+
+    assert distance1 == 1.0
+    assert distance2 == 1.0
+    assert distance3 == 0
+
+
+def test_rel_euclidean_distance_high_num_neg():
+    """
+    Test rel_euclidean_distance for long array with high and negative numbers.
+    """
+    vector1 = np.ones((2, 20000)) * 50000
+    vector2 = np.ones((2, 20000)) * -100000
+    distance1 = rel_euclidean_distance(vector1, vector2)
+    distance2 = rel_euclidean_distance(vector2, vector2)
+
+    assert distance1 == 1.0
+    assert distance2 == 0
+
+
+def test_signal_noise_ratio_zero():
+    """
+    Test signal_noise_ratio for zero vector as input value.
+    """
+    zero_vector = np.zeros((2, 10000))
+    one_vector = np.ones((2, 10000))
+    snr1 = signal_noise_ratio(zero_vector, one_vector)
+    snr2 = signal_noise_ratio(one_vector, zero_vector)
+    snr3 = signal_noise_ratio(zero_vector, zero_vector)
+    snr4 = signal_noise_ratio(one_vector, one_vector)
+
+    assert snr1 == -np.inf
+    assert snr2 == np.inf
+    assert snr3 == 0
+    assert snr4 == 0
+
+
+def test_signal_noise_ratio_high_num_neg():
+    """
+    Test signal_noise_ratio for long array with high and negative numbers.
+    """
+    vector1 = np.ones((2, 20000)) * 50000
+    vector2 = np.ones((2, 20000)) * -100000
+    snr1 = signal_noise_ratio(vector1, vector2)
+    snr2 = signal_noise_ratio(vector2, vector2)
+    snr3 = signal_noise_ratio(vector2, vector1)
+
+    assert snr1 < 0.0
+    assert snr2 == 0
+    assert snr3 > 0.0
+
+
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_sinus_euc():
     """
