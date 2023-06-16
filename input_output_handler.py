@@ -51,13 +51,25 @@ def get_targets(input_filename, output_filename):
 
 
 def read_input(target, chunk):
-    data = None
+    """
+    Reads the input from the target and returns it as a numpy array.
+
+    :param target: target for reading
+    :type target: wave.Wave_read or pyaudio.PyAudio.Stream
+    :param chunk: number of frames to read from the target
+    :type chunk: int
+    :return: data
+    :rtype: numpy.ndarray
+    """
+
+    data = np.array([])
     if type(target) == wave.Wave_read:
         channels = target.getnchannels()
         buffer = target.readframes(chunk)
         data = np.frombuffer(buffer, dtype=np.int16)
         data = data.reshape((-1, channels))
     elif type(target) == pyaudio.PyAudio.Stream:
+        # TODO: Add support for pyaudio stream
         raise NotImplementedError
     else:
         print(f"Target for reading of unkown type: {type(target)}")
