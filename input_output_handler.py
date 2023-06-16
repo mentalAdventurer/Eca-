@@ -77,7 +77,18 @@ def read_input(target, chunk):
 
 
 def write_output(target, data):
-    pass
+    """
+    Writes the data to the target.
+
+    :param target: target for writing
+    :type target: wave.Wave_write or pyaudio.PyAudio.Stream
+    :param data: data to write
+    :type data: numpy.ndarray
+    """
+    if type(target) == wave.Wave_write:
+        target.writeframes(data)
+    elif type(target) == pyaudio.PyAudio.Stream:
+        raise NotImplementedError
 
 
 def clean_up(clean_up_array):
