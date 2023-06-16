@@ -4,6 +4,7 @@ import numpy as np
 CHUNK = 1024
 RATE = 44100
 CHANNELS = 2
+SAMPLEWIDTH = 2
 
 
 def rel_euclidean_distance(vector1, vector2):
