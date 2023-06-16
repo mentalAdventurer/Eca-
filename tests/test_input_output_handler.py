@@ -14,6 +14,18 @@ def test_read_input_type_not_supported(capfd):
     assert captured.out.strip() == f"Target for reading of unkown type: {type(target)}"
 
 
+def test_read_input_type_supported():
+    """
+    Test if the function get_targets returns the correct types and greate than 0.
+    """
+    input_filename = "./records/record_30.wav"
+    target, _ = io.get_targets(input_filename, None)
+    data = io.read_input(target, 1024)
+
+    assert type(data) == np.ndarray
+    assert data.size > 0
+
+
 def test_write_output_sanity():
     """
     Test if the function write_output writes the correct data.
