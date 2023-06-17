@@ -1,7 +1,7 @@
 import numpy as np
 import pyaudio
 import wave
-from filter import CHUNK, RATE, CHANNELS, SAMPLEWIDTH
+from filter import CHUNK, RATE, CHANNELS, SAMPWIDTH
 from scipy.io import wavfile
 
 
@@ -24,9 +24,13 @@ def get_targets(input_filename, output_filename):
     """
     read_target = None
     write_target = None
+
+    # determine the input target
     if input_filename:
         read_target = wave.open(input_filename, "rb")
+        params = read_target.getparams()
     else:
+        params = None
         read_target = pyaudio.PyAudio().open(
             format=pyaudio.paInt16,
             channels=CHANNELS,
@@ -34,11 +38,19 @@ def get_targets(input_filename, output_filename):
             input=True,
             frames_per_buffer=CHUNK,
         )
+
+    # determine the output target
     if output_filename:
         write_target = wave.open(output_filename, "wb")
-        write_target.setframerate(RATE)
-        write_target.setnchannels(CHANNELS)
-        write_target.setsampwidth(SAMPLEWIDTH)
+
+        # if set use the params from the input file
+        if params:
+            write_target.setparams(params)
+        else:
+            write_target.setframerate(RATE)
+            write_target.setnchannels(CHANNELS)
+            write_target.setsampwidth(SAMPWIDTH)
+
     else:
         write_target = pyaudio.PyAudio().open(
             format=pyaudio.paInt16,
@@ -47,6 +59,7 @@ def get_targets(input_filename, output_filename):
             output=True,
             frames_per_buffer=CHUNK,
         )
+
     return read_target, write_target
 
 
