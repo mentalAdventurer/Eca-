@@ -86,9 +86,13 @@ def write_output(target, data):
     :type data: numpy.ndarray
     """
     if type(target) == wave.Wave_write:
+        data = data.reshape((-1,))
+        data = data.astype(np.int16).tobytes()
         target.writeframes(data)
     elif type(target) == pyaudio.PyAudio.Stream:
         raise NotImplementedError
+    else:
+        print(f"Target for reading of unkown type: {type(target)}")
 
 
 def clean_up(clean_up_array):
