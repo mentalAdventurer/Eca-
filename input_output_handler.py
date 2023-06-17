@@ -45,6 +45,16 @@ def get_targets(input_filename, output_filename):
     :return: input_target, output_target
     :rtype: tuple
     """
+    # Check if input_filename is a string
+    if input_filename is not None and type(input_filename) != str:
+        raise TypeError("Input Filename must be a string or None")
+    if output_filename is not None and type(output_filename) != str:
+        raise TypeError("Output Filename must be a string or None")
+
+    # TODO: replace pyaudio
+    # audio = pyaudio.PyAudio()
+    # clean_up_array.append(audio)
+
     read_target = None
     write_target = None
 
@@ -95,6 +105,10 @@ def read_noise(noise_filename):
     :return: noise
     :rtype: numpy.ndarray
     """
+    # Check if input_filename is a string
+    if noise_filename is not None and type(noise_filename) != str:
+        raise TypeError("Input Filename must be a string or None")
+
     if noise_filename is None:
         return None
 
@@ -160,6 +174,9 @@ def clean_up(clean_up_array):
     :param clean_up_array: Objekts to close or terminate
     :type clean_up_array: list
     """
+    if type(clean_up_array) != list:
+        raise TypeError("Target must be a list")
+
     for item in clean_up_array:
         if type(item) == pyaudio.PyAudio.Stream:
             item.stop_stream()
@@ -168,3 +185,5 @@ def clean_up(clean_up_array):
             item.terminate()
         elif type(item) == wave.Wave_read or type(item) == wave.Wave_write:
             item.close()
+        else:
+            print(f"Target for closing of unkown type: {type(item)}")
