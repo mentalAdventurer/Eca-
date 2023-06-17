@@ -28,8 +28,6 @@ def get_args():
         raise NotImplementedError("Input from microphone not implemented yet")
     if output_file is None:
         raise NotImplementedError("Output to speaker not implemented yet")
-    if noise_file is not None:
-        raise NotImplementedError("Noise file not implemented yet")
 
     return input_file, output_file, noise_file
 
@@ -86,6 +84,28 @@ def get_targets(input_filename, output_filename):
         )
 
     return read_target, write_target
+
+
+def read_noise(noise_filename):
+    """
+    Reads the noise file and returns it as a numpy array.
+
+    :param noise_filename: filename of the noise file
+    :type noise_filename: str
+    :return: noise
+    :rtype: numpy.ndarray
+    """
+    if noise_filename is None:
+        return None
+
+    noise_file = wave.open(noise_filename, "rb")
+    num_frames = noise_file.getnframes()
+    num_channels = noise_file.getnchannels()
+    buffer = noise_file.readframes(num_frames)
+    noise = np.frombuffer(buffer, dtype=np.int16)
+    noise = noise.reshape((num_channels, -1))
+
+    return noise
 
 
 def read_input(target, chunk):

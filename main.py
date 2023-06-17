@@ -5,7 +5,7 @@ from filter import RATE, CHUNK, filter_evaluation, print_result
 from filter import spectral_gate as filter
 
 
-def main(input_filename, output_filename, noise_filename=None):
+def main(input_filename, output_filename, noise_filename):
     """
     Assembly of filter and streams
 
@@ -17,13 +17,12 @@ def main(input_filename, output_filename, noise_filename=None):
     :type noise_filename: str or None
     :raises KeyboardInterrupt: if user interrupts the program
     """
-
-    # TODO: implement argument parser
-    # TODO: implement noise_filename
-
     # initialize the input and output targets
     read_target, write_target = io.get_targets(input_filename, output_filename)
     clean_up_array = [read_target, write_target]
+
+    # read the noise file
+    noise = io.read_noise(noise_filename)
 
     # Collector for the evaluation results
     input_collector = []
@@ -34,7 +33,7 @@ def main(input_filename, output_filename, noise_filename=None):
     try:
         while data.size > 0 or type(read_target) == pyaudio.PyAudio.Stream:
             input_collector.append(data)
-            reduced_noise = filter(data, RATE, noise_filename)
+            reduced_noise = filter(data, RATE, noise)
             output_collector.append(reduced_noise)
             io.write_output(write_target, reduced_noise)
             data = io.read_input(read_target, CHUNK)
