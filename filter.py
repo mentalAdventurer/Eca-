@@ -65,6 +65,25 @@ def signal_noise_ratio(signal, noise):
 
 
 def spectral_gate(data, rate, noise=None):
+    """
+    Filter out noise from signal using spectral gating method.
+
+    :param data: data to be filtered
+    :type data: numpy.ndarray
+    :param rate: sample rate of data
+    :type rate: int
+    :param noise: noise for masking
+    :type noise: numpy.ndarray
+    :return: filtered data
+    :rtype: numpy.ndarray
+    """
+
+    # when last section is too narrow discard the part
+    min_data_size = 1024
+    if data.size <= min_data_size:
+        return np.array([])
+
+    # filter out noise from signal using spectral gating method
     sg = SpectralGateStationary(
         y=data,
         sr=rate,
@@ -77,7 +96,7 @@ def spectral_gate(data, rate, noise=None):
         tmp_folder=None,
         chunk_size=600000,
         padding=30000,
-        n_fft=1024,
+        n_fft=min_data_size,
         win_length=None,
         hop_length=None,
         clip_noise_stationary=True,
