@@ -2,12 +2,36 @@ import numpy as np
 import pyaudio
 import wave
 from filter import CHUNK, RATE, CHANNELS, SAMPWIDTH
-from scipy.io import wavfile
+import argparse
 
 
 def get_args():
-    # TODO: implement argparse
-    return "./records/record_30.wav", "test.wav", None
+    """
+    Returns the arguments for the main loop
+
+    :return: input_filename, output_filename, noise_filename
+    :rtype: str, str, str
+    """
+    parser = argparse.ArgumentParser(description="Filtering of audio files")
+    parser.add_argument("-i", "--input", type=str, help="Input file")
+    parser.add_argument("-o", "--output", type=str, help="Output file")
+    parser.add_argument("-n", "--noise", type=str, help="Noise file")
+
+    args = parser.parse_args()
+
+    input_file = args.input
+    output_file = args.output
+    noise_file = args.noise
+
+    # Not Implemented
+    if input_file is None:
+        raise NotImplementedError("Input from microphone not implemented yet")
+    if output_file is None:
+        raise NotImplementedError("Output to speaker not implemented yet")
+    if noise_file is not None:
+        raise NotImplementedError("Noise file not implemented yet")
+
+    return input_file, output_file, noise_file
 
 
 def get_targets(input_filename, output_filename):
