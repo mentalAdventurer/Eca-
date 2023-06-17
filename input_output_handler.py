@@ -6,6 +6,7 @@ from scipy.io import wavfile
 
 
 def get_args():
+    # TODO: implement argparse
     return "./records/record_30.wav", "test.wav", None
 
 
@@ -80,7 +81,7 @@ def read_input(target, chunk):
         channels = target.getnchannels()
         buffer = target.readframes(chunk)
         data = np.frombuffer(buffer, dtype=np.int16)
-        data = data.reshape((-1, channels))
+        data = data.reshape((channels, -1))
     elif type(target) == pyaudio.PyAudio.Stream:
         # TODO: Add support for pyaudio stream
         raise NotImplementedError
