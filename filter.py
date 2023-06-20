@@ -131,6 +131,8 @@ def psnr(signal1, signal2):
 
     if mse == 0:
         psnr = np.inf
+    elif np.max(signal1_int64) - np.min(signal1_int64) == 0:
+        psnr = -np.inf
     else:
         psnr = 10 * np.log10((np.max(signal1_int64) - np.min(signal1_int64)) ** 2 / mse)
 
