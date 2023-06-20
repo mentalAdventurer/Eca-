@@ -15,6 +15,7 @@ When the fan starts on my notebook, a background noise is generated. The aim wou
 ¹Exam relevant
 
 ## Dependencies
+- python (v3.11.3)
 - numpy (v1.24.3)
 - scipy (v1.10.1)
 - noisereduce (v2.0.1)
