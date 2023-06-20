@@ -1,3 +1,13 @@
+"""
+Noise Reduction using Spectral Gating: Filter
+
+This module contains the filter functions for the noise reduction using spectral gating.
+
+:Author: Fabian Tschohl
+:Student id: 51843947
+:Date: 20.06.2023
+"""
+
 from noisereduce.noisereduce import SpectralGateStationary
 import numpy as np
 import pyaudio

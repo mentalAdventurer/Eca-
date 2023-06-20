@@ -1,3 +1,14 @@
+"""
+Noise Reduction using Spectral Gating: Input/Output Handler
+
+This module contains the input/output handler functions 
+switching between the different input/output types.
+
+:Author: Fabian Tschohl
+:Student id: 51843947
+:Date: 20.06.2023
+"""
+
 import numpy as np
 import pyaudio
 import wave

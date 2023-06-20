@@ -1,3 +1,14 @@
+"""
+Noise Reduction using Spectral Gating: Main
+
+This File contains the main loop of the noise for the filter 
+combining the filter and the input/output handler.
+
+:Author: Fabian Tschohl
+:Student id: 51843947
+:Date: 20.06.2023
+"""
+
 import numpy as np
 import pyaudio
 import input_output_handler as io
@@ -48,6 +59,7 @@ def main(input_filename, output_filename, noise_filename):
         print_result(evaluation)
 
     except KeyboardInterrupt:
+        # Clean up the streams.
         io.clean_up(clean_up_array)
 
         # Evaluate the filtering result.
@@ -60,5 +72,8 @@ def main(input_filename, output_filename, noise_filename):
 
 
 if __name__ == "__main__":
+    # Get the filenames from the command line arguments.
     input_filename, output_filename, noise_filename = io.get_args()
+
+    # Run the main program.
     main(input_filename, output_filename, noise_filename)
