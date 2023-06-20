@@ -68,6 +68,167 @@ def test_signal_noise_ratio_high_num_neg():
     assert snr3 > 0.0
 
 
+def test_mse_zero():
+    """
+    Test mse for zero vector as input value.
+    """
+    zero_vector = np.zeros((2, 10000))
+    one_vector = np.ones((2, 10000))
+    mse1 = filter.mse(zero_vector, one_vector)
+    mse2 = filter.mse(one_vector, zero_vector)
+    mse3 = filter.mse(zero_vector, zero_vector)
+    mse4 = filter.mse(one_vector, one_vector)
+
+    assert mse1 == 1.0
+    assert mse2 == 1.0
+    assert mse3 == 0
+    assert mse4 == 0
+
+
+def test_mse_high_num_neg():
+    """
+    Test mse for long array with high and negative numbers.
+    Check for overflow.
+    """
+    vector1 = np.ones((2, 20000)) * 50000
+    vector2 = np.ones((2, 20000)) * -100000
+    mse1 = filter.mse(vector1, vector2)
+    mse2 = filter.mse(vector2, vector2)
+    mse3 = filter.mse(vector2, vector1)
+
+    assert mse1 == 22500000000.0
+    assert mse2 == 0
+    assert mse3 == 22500000000.0
+
+
+def test_mse():
+    """
+    Test mse for two vectors with same values.
+    """
+    vector1 = np.ones((2, 20))
+    vector2 = np.ones((2, 20))
+    mse1 = filter.mse(vector1, vector2)
+
+    assert mse1 == 0
+
+
+def test_rmse_zero():
+    """
+    Test rmse for zero vector as input value.
+    """
+    zero_vector = np.zeros((2, 10000))
+    one_vector = np.ones((2, 10000))
+    rmse1 = filter.rmse(zero_vector, one_vector)
+    rmse2 = filter.rmse(one_vector, zero_vector)
+    rmse3 = filter.rmse(zero_vector, zero_vector)
+    rmse4 = filter.rmse(one_vector, one_vector)
+
+    assert rmse1 == 1.0
+    assert rmse2 == 1.0
+    assert rmse3 == 0
+    assert rmse4 == 0
+
+
+def test_rmse_high_num_neg():
+    """
+    Test rmse for long array with high and negative numbers.
+    Check for overflow.
+    """
+    vector1 = np.ones((2, 20000)) * 50000
+    vector2 = np.ones((2, 20000)) * -100000
+    rmse1 = filter.rmse(vector1, vector2)
+    rmse2 = filter.rmse(vector2, vector2)
+    rmse3 = filter.rmse(vector2, vector1)
+
+    assert rmse1 == 150000.0
+    assert rmse2 == 0
+    assert rmse3 == 150000.0
+
+
+def test_rmse():
+    """
+    Test rmse for two vectors with same values.
+    """
+    vector1 = np.ones((2, 20))
+    vector2 = np.ones((2, 20))
+    rmse1 = filter.rmse(vector1, vector2)
+
+    assert rmse1 == 0
+
+
+def test_psnr_zero():
+    """
+    Test psnr for zero vector as input value.
+    """
+    zero_vector = np.zeros((2, 10000))
+    one_vector = np.ones((2, 10000))
+    psnr1 = filter.psnr(zero_vector, one_vector)
+    psnr2 = filter.psnr(one_vector, zero_vector)
+    psnr3 = filter.psnr(zero_vector, zero_vector)
+    psnr4 = filter.psnr(one_vector, one_vector)
+
+    assert psnr1 == -np.inf
+    assert psnr2 == -np.inf
+    assert psnr3 == np.inf
+    assert psnr4 == np.inf
+
+
+def test_psnr():
+    """
+    Test psnr for two vectors with same values.
+    """
+    vector1 = np.ones((2, 20))
+    vector2 = np.ones((2, 20))
+    psnr1 = filter.psnr(vector1, vector2)
+
+    assert psnr1 == np.inf
+
+
+def test_ncc_zero():
+    """
+    Test ncc for zero vector as input value.
+    """
+    zero_vector = np.zeros((2, 10000))
+    one_vector = np.ones((2, 10000))
+    ncc1 = filter.ncc(zero_vector, one_vector)
+    ncc2 = filter.ncc(one_vector, zero_vector)
+    ncc3 = filter.ncc(zero_vector, zero_vector)
+    ncc4 = filter.ncc(one_vector, one_vector)
+
+    assert ncc1 == 0
+    assert ncc2 == 0
+    assert ncc3 == 0
+    assert ncc4 == 0
+
+
+def test_power_loss_zero():
+    """
+    Test power_loss for zero vector as input value.
+    """
+    zero_vector = np.zeros((2, 10000))
+    one_vector = np.ones((2, 10000))
+    power_loss1 = filter.power_loss(zero_vector, one_vector)
+    power_loss2 = filter.power_loss(one_vector, zero_vector)
+    power_loss3 = filter.power_loss(zero_vector, zero_vector)
+    power_loss4 = filter.power_loss(one_vector, one_vector)
+
+    assert power_loss1 == -1
+    assert power_loss2 == 1
+    assert power_loss3 == 0
+    assert power_loss4 == 0
+
+
+def test_power_loss():
+    """
+    Test power_loss for two vectors with same values.
+    """
+    vector1 = np.ones((2, 20))
+    vector2 = np.ones((2, 20))
+    power_loss1 = filter.power_loss(vector1, vector2)
+
+    assert power_loss1 == 0
+
+
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_sinus_euc():
     """
