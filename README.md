@@ -21,12 +21,12 @@ When the fan starts on my notebook, a background noise is generated. The aim wou
 For the first use of the programme, a sample audio file is attached to the project. Simply execute the programm by providing an output filename and input filename.
 
 ```sh
-python ./main -i ./records/record_30.wav -o filter_output.wav
+python ./main.py -i ./records/record_30.wav -o filter_output.wav
 ```
 If the user has an isolated recording of the background noise, this can be passed to the programme to create a customised filter mask.
 
 ```sh
-python ./main -i ./records/record_30.wav -o filter_output.wav -n ./records/noise_30.wav
+python ./main.py -i ./records/record_30.wav -o filter_output.wav -n ./records/noise_30.wav
 ```
 
 > **Warning**
@@ -52,7 +52,7 @@ to get more Information.
 ### Nested Structur
 You may or may not have trouble finding the nested structure. 
 In order to fully meet this requirement, an evaluation of the audio has been created which uses a nested structure to collect and calculate the audio signal's characteristic metrics. 
-This is used to print user information at the end of the program flow. Take a look at the `filter_evaluation` function in the `filter.py' file.
+This is used to print user information at the end of the program flow. Take a look at the `filter_evaluation` function in the `filter.py` file.
 
 ### Pytest
 You may also be wondering why pytest has been used instead of doctest. Of course, this is not an expression of youthful recklessness but was discussed and approved with Joanna.
