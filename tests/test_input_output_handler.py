@@ -31,7 +31,7 @@ def test_write_output_sanity():
     """
     Test if the function write_output writes the correct data.
     """
-    output_filename = "test.wav"
+    output_filename = "./tests/test.wav"
     input_filename = "./records/record_30.wav"
 
     read_target, write_target = io.get_targets(input_filename, output_filename)
@@ -56,9 +56,8 @@ def test_get_targets_type():
     """
     Test if the function get_targets returns the correct types.
     """
-
     input_filename = "./records/record_30.wav"
-    output_filename = "test.wav"
+    output_filename = "./tests/test.wav"
     read_target, write_target = io.get_targets(input_filename, output_filename)
     assert type(read_target) == wave.Wave_read
     assert type(write_target) == wave.Wave_write
@@ -75,7 +74,7 @@ def test_get_targets_wrong_type():
     Test if the function get_targets raises an error if the type of the target is not supported.
     """
     input_filename = 5.7
-    output_filename = "test.wav"
+    output_filename = "./tests/test.wav"
     with pytest.raises(TypeError, match="Input Filename must be a string or None"):
         read_target, write_target = io.get_targets(input_filename, output_filename)
 
@@ -118,7 +117,7 @@ def test_clean_up_closing():
     Test if the function clean_up closes the targets.
     """
     input_filename = "./records/record_30.wav"
-    output_filename = "test.wav"
+    output_filename = "./tests/test.wav"
     read_target, write_target = io.get_targets(input_filename, output_filename)
     data = io.read_input(read_target, 1024)
 
@@ -137,7 +136,7 @@ def test_clean_up_wrong_type(capfd):
     Test if the function clean_up raises an error if the type of the target is not supported.
     """
     input_filename = "./records/record_30.wav"
-    output_filename = "test.wav"
+    output_filename = "./tests/test.wav"
     read_target, write_target = io.get_targets(input_filename, output_filename)
     data = io.read_input(read_target, 1024)
 
