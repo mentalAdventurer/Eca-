@@ -1,9 +1,4 @@
-# Projekt-Exam 2
-
----
-author: Fabian Tschohl
-date: 20.06.2022
----
+# Noise Reduction using Spectral Gating
 
 ## Overview and Motivation
 When the fan starts on my notebook, a background noise is generated. The aim would be to filter this background noise. The programme should be able to read audio streams from microphones and audio files, filter the background noise and then send the filtered signal to a virtual microphone or an audio file. Ideally, the programme should filter the noise in real time. **However, only the filtering of wav-files should be relevant for the grading in this project.**
