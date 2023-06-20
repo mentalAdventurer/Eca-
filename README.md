@@ -17,7 +17,21 @@ When the fan starts on my notebook, a background noise is generated. The aim wou
 
 ¹Exam relevant
 
+## Dependencies
+- numpy (v1.24.3)
+- scipy (v1.10.1)
+- noisereduce (v2.0.1)
+- pyaudio >= 0.2.13 (**required**)
+- wave
+
+Although reading from the microphone and writing to the speaker have not yet been implemented, preparations have already been made. Therefore pyaudio is needed as a dependency. 
+
+> **Warning**
+> The program uses a type comparison with `pyaudio.PyAudio.Stream`.
+> This is implemented in the latest version of pyaudio. Make sure you use the latest version.
+
 ## Getting started
+
 For the first use of the programme, a sample audio file is attached to the project. Simply execute the programm by providing an output filename and input filename.
 
 ```sh
@@ -62,3 +76,14 @@ This is used to print user information at the end of the program flow. Take a lo
 ### Pytest
 You may also be wondering why pytest has been used instead of doctest. Of course, this is not an expression of youthful recklessness but was discussed and approved with Joanna.
 
+## Troubleshooting
+#### NotImplementedError: Output to speaker not implemented yet
+You have to define input and output filename parameter in oder to work
+
+#### AttributeError: type object 'PyAudio' has no attribute 'Stream'
+You have not the latest pyaudio == 0.2.13 installed. Try to upgrade it.
+If you are unable to upgrade due to lack of support for your distribution.
+As a **last resort**, there is a version without pyaudio available on github, but keep in mind that this is not the main branch. Some tests have been excluded and are not as thoroughly tested.
+```sh
+git clone -b pyaudio-disable https://github.com/mentalAdventurer/Python-Exam2.git
+```
