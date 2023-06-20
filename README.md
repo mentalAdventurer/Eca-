@@ -50,7 +50,9 @@ to get more Information.
 
 ## Grading Information
 ### Nested Structur
-You may or may not have trouble finding the nested structure. In order to fully meet this requirement, an evaluation of the audio has been created which uses a nested structure to collect and calculate the audio signal's characteristic metrics. This is used to print user information at the end of the program flow. Take a look at the `filter_evaluation' function in the `filter.py' file.
+You may or may not have trouble finding the nested structure. 
+In order to fully meet this requirement, an evaluation of the audio has been created which uses a nested structure to collect and calculate the audio signal's characteristic metrics. 
+This is used to print user information at the end of the program flow. Take a look at the `filter_evaluation` function in the `filter.py' file.
 
 ### Pytest
 You may also be wondering why pytest has been used instead of doctest. Of course, this is not an expression of youthful recklessness but was discussed and approved with Joanna.
