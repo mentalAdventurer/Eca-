@@ -47,6 +47,11 @@ to get more Information.
 
 > **Note**
 > Make sure that you are also in the root folder of the project.
+ 
+> **Note**
+> During the tests, a file called `test.wav` is created.
+> There is no guarantee or requirement that this file is a valid audio file.
+> It is only used for testing purposes.  
 
 ## Grading Information
 ### Nested Structur
