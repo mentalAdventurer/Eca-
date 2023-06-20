@@ -2,7 +2,6 @@ import numpy as np
 import filter
 from filter import rel_euclidean_distance, signal_noise_ratio
 import pytest
-from scipy.io import wavfile
 
 EUCLIDEAN_TOL = 1e-1
 SNR_TOL = 20
