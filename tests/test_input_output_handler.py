@@ -1,6 +1,5 @@
 import wave
 import numpy as np
-import pyaudio
 import input_output_handler as io
 import pytest
 
@@ -65,8 +64,6 @@ def test_get_targets_type():
     input_filename = None
     output_filename = None
     read_target, write_target = io.get_targets(input_filename, output_filename)
-    assert type(read_target) == pyaudio.PyAudio.Stream
-    assert type(write_target) == pyaudio.PyAudio.Stream
 
 
 def test_get_targets_wrong_type():

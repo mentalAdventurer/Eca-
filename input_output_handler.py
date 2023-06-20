@@ -10,7 +10,6 @@ switching between the different input/output types.
 """
 
 import numpy as np
-import pyaudio
 import wave
 from filter import CHUNK, RATE, CHANNELS, SAMPWIDTH
 import argparse
@@ -73,15 +72,6 @@ def get_targets(input_filename, output_filename):
     if input_filename:
         read_target = wave.open(input_filename, "rb")
         params = read_target.getparams()
-    else:
-        params = None
-        read_target = pyaudio.PyAudio().open(
-            format=pyaudio.paInt16,
-            channels=CHANNELS,
-            rate=RATE,
-            input=True,
-            frames_per_buffer=CHUNK,
-        )
 
     # determine the output target
     if output_filename:
@@ -94,15 +84,6 @@ def get_targets(input_filename, output_filename):
             write_target.setframerate(RATE)
             write_target.setnchannels(CHANNELS)
             write_target.setsampwidth(SAMPWIDTH)
-
-    else:
-        write_target = pyaudio.PyAudio().open(
-            format=pyaudio.paInt16,
-            channels=CHANNELS,
-            rate=RATE,
-            output=True,
-            frames_per_buffer=CHUNK,
-        )
 
     return read_target, write_target
 
@@ -151,9 +132,6 @@ def read_input(target, chunk):
         buffer = target.readframes(chunk)
         data = np.frombuffer(buffer, dtype=np.int16)
         data = data.reshape((channels, -1))
-    elif type(target) == pyaudio.PyAudio.Stream:
-        # TODO: Add support for pyaudio stream
-        raise NotImplementedError
     else:
         print(f"Target for reading of unkown type: {type(target)}")
     return data
@@ -172,8 +150,6 @@ def write_output(target, data):
         data = data.reshape((-1,))
         data = data.astype(np.int16).tobytes()
         target.writeframes(data)
-    elif type(target) == pyaudio.PyAudio.Stream:
-        raise NotImplementedError
     else:
         print(f"Target for reading of unkown type: {type(target)}")
 
@@ -189,12 +165,7 @@ def clean_up(clean_up_array):
         raise TypeError("Target must be a list")
 
     for item in clean_up_array:
-        if type(item) == pyaudio.PyAudio.Stream:
-            item.stop_stream()
-            item.close()
-        elif type(item) == pyaudio.PyAudio:
-            item.terminate()
-        elif type(item) == wave.Wave_read or type(item) == wave.Wave_write:
+        if type(item) == wave.Wave_read or type(item) == wave.Wave_write:
             item.close()
         else:
             print(f"Target for closing of unkown type: {type(item)}")

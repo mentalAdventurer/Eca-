@@ -10,7 +10,6 @@ This module contains the filter functions for the noise reduction using spectral
 
 from noisereduce.noisereduce import SpectralGateStationary
 import numpy as np
-import pyaudio
 import wave
 
 CHUNK = 8192
@@ -258,11 +257,6 @@ def filter_evaluation(read_target, write_target, signal1, signal2):
         evaluation["Sig1"]["SampleRate"] = read_target.getframerate()
         evaluation["Sig1"]["Channels"] = read_target.getnchannels()
         evaluation["Sig1"]["BitsPerSample"] = read_target.getsampwidth() * 8
-    elif type(read_target) == pyaudio.PyAudio.Stream:
-        evaluation["Sig1"]["Source"] = "Microphone"
-        evaluation["Sig1"]["SampleRate"] = RATE
-        evaluation["Sig1"]["Channels"] = CHANNELS
-        evaluation["Sig1"]["BitsPerSample"] = SAMPWIDTH * 8
     else:
         raise TypeError(
             "read_target must be either wave.Wave_read or pyaudio.PyAudio.Stream"
@@ -274,11 +268,6 @@ def filter_evaluation(read_target, write_target, signal1, signal2):
         evaluation["Sig2"]["SampleRate"] = write_target.getframerate()
         evaluation["Sig2"]["Channels"] = write_target.getnchannels()
         evaluation["Sig2"]["BitsPerSample"] = write_target.getsampwidth() * 8
-    elif type(write_target) == pyaudio.PyAudio.Stream:
-        evaluation["Sig2"]["Sink"] = "Speaker"
-        evaluation["Sig2"]["SampleRate"] = RATE
-        evaluation["Sig2"]["Channels"] = CHANNELS
-        evaluation["Sig2"]["BitsPerSample"] = SAMPWIDTH * 8
     else:
         raise TypeError(
             "write_target must be either wave.Wave_write or pyaudio.PyAudio.Stream"

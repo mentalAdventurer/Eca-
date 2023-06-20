@@ -10,7 +10,6 @@ combining the filter and the input/output handler.
 """
 
 import numpy as np
-import pyaudio
 import input_output_handler as io
 from filter import RATE, CHUNK, filter_evaluation, print_result
 from filter import spectral_gate as filter
@@ -42,7 +41,7 @@ def main(input_filename, output_filename, noise_filename):
     # loop: read -> filter -> write until empty or KeyboardInterrupt
     data = io.read_input(read_target, CHUNK)
     try:
-        while data.size > 0 or type(read_target) == pyaudio.PyAudio.Stream:
+        while data.size > 0:
             input_collector.append(data)
             reduced_noise = filter(data, RATE, noise)
             output_collector.append(reduced_noise)
